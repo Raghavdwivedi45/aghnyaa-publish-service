@@ -1,0 +1,21 @@
+{
+    "sqltools.connections": [
+        {
+            "pgOptions": {
+                "statement_timeout": 20000,
+                "query_timeout": 60000,
+                "connectionTimeoutMillis": 60000
+            },
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "askForPassword": true,
+            "driver": "PostgreSQL",
+            "name": "aghnyaa-test-connect",
+            "group": "aghnyaa-test-group",
+            "database": "postgres",
+            "username": "postgres"
+        }
+    ]
+}
