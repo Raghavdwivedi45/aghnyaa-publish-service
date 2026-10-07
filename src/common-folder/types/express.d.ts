@@ -1,5 +1,4 @@
-import { AuthPayload } from "../interfaces/interfaces";
-
+import { AuthPayload } from '../interfaces/interfaces';
 
 declare global {
   namespace Express {
