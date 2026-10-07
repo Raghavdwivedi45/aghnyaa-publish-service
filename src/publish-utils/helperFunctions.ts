@@ -1,14 +1,14 @@
-import puppeteer, { Browser, LaunchOptions } from "puppeteer";
+import puppeteer, { Browser, LaunchOptions } from 'puppeteer';
 
-export const URLGenerator = (type: "USER", endpoint: string) => {
-    // endpoint should start with "/"
-    switch (type) {
-        case "USER":
-            return `${process.env.AGHNYAA_USER_SERVICE}${endpoint}`;
-        default:
-            return "";
-    }
-}
+export const URLGenerator = (type: 'USER', endpoint: string) => {
+  // endpoint should start with "/"
+  switch (type) {
+    case 'USER':
+      return `${process.env.AGHNYAA_USER_SERVICE}${endpoint}`;
+    default:
+      return '';
+  }
+};
 
 // Render runs the service as an unprivileged user in a 512MB container:
 // - "shell" swaps full Chrome for chrome-headless-shell, a stripped headless-only build that
@@ -18,39 +18,37 @@ export const URLGenerator = (type: "USER", endpoint: string) => {
 //   falls back to /tmp
 // Locally none of this applies, so keep the full browser with its sandbox intact.
 const launchOptions: LaunchOptions =
-    process.env.NODE_ENV === "production"
-        ? {
-            headless: "shell",
-            args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"]
-        }
-        : {};
+  process.env.NODE_ENV === 'production'
+    ? {
+        headless: 'shell',
+        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
+      }
+    : {};
 
 export const PDFGenerator = async (htmlContent: string, pdfName: string) => {
-    let browser: Browser | undefined;
+  let browser: Browser | undefined;
 
-    try {
-        browser = await puppeteer.launch(launchOptions);
-        const page = await browser.newPage();
+  try {
+    browser = await puppeteer.launch(launchOptions);
+    const page = await browser.newPage();
 
-        await page.setContent(htmlContent, { waitUntil: "load" }); // set html content on the browser's page
-        const pdf = await page.pdf({ format: "A4", printBackground: false, preferCSSPageSize: true }); // Generate PDF and give me the PDF data.
-        // This controls whether CSS backgrounds are included in the PDF. -> (.article-header {background: black; color: white}) -> Without printBackground: true -> the PDF may omit that black background.
-        await browser.close();
+    await page.setContent(htmlContent, { waitUntil: 'load' }); // set html content on the browser's page
+    const pdf = await page.pdf({ format: 'A4', printBackground: false, preferCSSPageSize: true }); // Generate PDF and give me the PDF data.
+    // This controls whether CSS backgrounds are included in the PDF. -> (.article-header {background: black; color: white}) -> Without printBackground: true -> the PDF may omit that black background.
+    await browser.close();
 
-        return Buffer.from(pdf);
+    return Buffer.from(pdf);
+  } catch (err) {
+    console.log('Error while generating PDF', pdfName, err);
+  } finally {
+    if (browser) {
+      await browser.close();
     }
-    catch (err) {
-        console.log("Error while generating PDF", pdfName, err)
-    }
-    finally {
-        if (browser) {
-            await browser.close();
-        }
-    }
-}
+  }
+};
 
 export function generateArticlePdfHtml(title: string, excerpt: string, content: string): string {
-    return (`
+  return `
     <!DOCTYPE html>
     <html lang="en">
         <head>
@@ -509,5 +507,5 @@ export function generateArticlePdfHtml(title: string, excerpt: string, content: 
             </div>
 
         </body>
-    </html>`.trim());
+    </html>`.trim();
 }

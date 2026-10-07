@@ -1,101 +1,160 @@
-export const ARTICLE_CATEGORIES = [
-    "technology",
-    "programming",
-    "javascript",
-    "typescript",
-    "nodejs",
-    "mongodb",
-    "nextjs",
-    "react",
-    "career",
-    "tutorial"
-] as const;
+// export const ARTICLE_CATEGORIES = [
+//     "technology",
+//     "programming",
+//     "javascript",
+//     "typescript",
+//     "nodejs",
+//     "mongodb",
+//     "nextjs",
+//     "react",
+//     "career",
+//     "tutorial"
+// ] as const;
 
 export const ARTICLE_TAGS = [
-    "jwt",
-    "express",
-    "mongoose",
-    "docker",
-    "git",
-    "redis",
-    "aws",
-    "css",
-    "html"
+  'jwt',
+  'express',
+  'mongoose',
+  'docker',
+  'git',
+  'redis',
+  'aws',
+  'css',
+  'html',
+  'vedas',
+  'upanishads',
+  'dharmashastras',
+  'ramayana',
+  'mahabharata',
+  'puranas',
+  'yoga',
+  'ayurveda',
+  'vedanta',
+  'dharma',
+  'karma',
+  'moksha',
+  'bhakti',
+  'nyaya',
+  'vaisheshika',
+  'samkhya',
+  'mimamsa',
+  'jyotisha',
+  'vastu-shastra',
+  'mantras',
+  'yajna',
+  'tantra',
+  'neeti-shastra',
+  'parva',
 ] as const;
 
-export const ARTICLE_STATUS = [
-    "DRAFT",
-    "PUBLISHED",
-    "EDITED"
-] as const;
-
+export const ARTICLE_STATUS = ['DRAFT', 'PUBLISHED', 'EDITED'] as const;
 
 export const allowedImageTypes = [
-    "image/jpeg",
-    "image/png",
-    "image/webp",
-    "image/gif",
-    "image/avif",
-    "image/svg+xml"
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+  'image/gif',
+  'image/avif',
+  'image/svg+xml',
 ];
 
 // badWords.ts
 
 export const BAD_WORDS = new Set([
-    "fuck", "fucking", "shit", "bullshit", "bitch", "bastard", "asshole", "motherfucker", "cunt", "dick", "pussy", "slut", "whore", "nigger", "niga", "fag", "faggot", "retard", "idiot", "moron", "stupid", "dumb", "loser",
-    // spam
-    "viagra", "casino", "betting", "porn", "xxx", "crypto giveaway", "free money", "earn money fast", "click here", "buy now"
+  'fuck',
+  'fucking',
+  'shit',
+  'bullshit',
+  'bitch',
+  'bastard',
+  'asshole',
+  'motherfucker',
+  'cunt',
+  'dick',
+  'pussy',
+  'slut',
+  'whore',
+  'nigger',
+  'niga',
+  'fag',
+  'faggot',
+  'retard',
+  'idiot',
+  'moron',
+  'stupid',
+  'dumb',
+  'loser',
+  // spam
+  'viagra',
+  'casino',
+  'betting',
+  'porn',
+  'xxx',
+  'crypto giveaway',
+  'free money',
+  'earn money fast',
+  'click here',
+  'buy now',
 ]);
 
 export const allowedHTMLTags = [
-    "h1", "h2", "h3", "h4", "h5", "h6", "section", "blockquote", "div",
-    "figcaption", "figure", "hr", "li", "ol", "p", "pre", "ul", "a", "b",
-    "br", "cite", "em", "i", "mark", "small", "span", "strong", "sub", "sup",
-    "u", "caption", "col", "colgroup", "table", "tbody", "td", "tfoot", "th", "thead", "tr", "iframe"
-    // other supported tags are:
-    // "address", "article", "aside", "footer", "header", "hgroup", "main", "nav", "dd", "dl", "dt", "main", "abbr", "bdi", "bdo", "code", "data", "dfn", "kbd", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "time", "var", "wbr", 
-]
-
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
+  'h6',
+  'section',
+  'blockquote',
+  'div',
+  'figcaption',
+  'figure',
+  'hr',
+  'li',
+  'ol',
+  'p',
+  'pre',
+  'ul',
+  'a',
+  'b',
+  'br',
+  'cite',
+  'em',
+  'i',
+  'mark',
+  'small',
+  'span',
+  'strong',
+  'sub',
+  'sup',
+  'u',
+  'caption',
+  'col',
+  'colgroup',
+  'table',
+  'tbody',
+  'td',
+  'tfoot',
+  'th',
+  'thead',
+  'tr',
+  'iframe',
+  // other supported tags are:
+  // "address", "article", "aside", "footer", "header", "hgroup", "main", "nav", "dd", "dl", "dt", "main", "abbr", "bdi", "bdo", "code", "data", "dfn", "kbd", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "time", "var", "wbr",
+];
 
 export const allowedAttributes = {
-    "*": [
-        "class",
-        "id",
-        "title",
-        "style",
-        "lang",
-        "dir",
-    ],
+  '*': ['class', 'id', 'title', 'style', 'lang', 'dir'],
 
-    a: [
-        "href",
-        "target",
-        "rel",
-        "title",
-    ],
+  a: ['href', 'target', 'rel', 'title'],
 
-    img: [
-        "src",
-        "srcset",
-        "alt",
-        "title",
-        "width",
-        "height",
-        "loading",
-    ],
+  img: ['src', 'srcset', 'alt', 'title', 'width', 'height', 'loading'],
 
-    table: ["class"],
-    td: ["colspan", "rowspan"],
-    th: ["colspan", "rowspan", "scope"],
-    col: ["span"],
-    iframe: [
-        "src",
-        "width",
-        "height",
-        "allow",
-        "allowfullscreen",
-        "loading",
-    ],
+  table: ['class'],
+  td: ['colspan', 'rowspan'],
+  th: ['colspan', 'rowspan', 'scope'],
+  col: ['span'],
+  iframe: ['src', 'width', 'height', 'allow', 'allowfullscreen', 'loading'],
 };
 
 /*

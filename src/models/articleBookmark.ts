@@ -1,24 +1,27 @@
-import { model, Schema } from "mongoose";
+import { model, Schema } from 'mongoose';
 
-const articleBookmarkSchema = new Schema({
+const articleBookmarkSchema = new Schema(
+  {
     bookmarkedBy: {
-        type: Schema.Types.ObjectId,
-        required: true
+      type: Schema.Types.ObjectId,
+      required: true,
     },
     articleId: {
-        type: Schema.Types.ObjectId,
-        required: true
+      type: Schema.Types.ObjectId,
+      required: true,
     },
-}, { timestamps: true });
+  },
+  { timestamps: true },
+);
 
 // Unique compound index - Prevent duplicate Bookmarks
 // index = bookmarkedBy + articleId -> this group will be unique
 articleBookmarkSchema.index(
-    {
-        bookmarkedBy: 1,
-        articleId: 1,
-    },
-    { unique: true }
-)
+  {
+    bookmarkedBy: 1,
+    articleId: 1,
+  },
+  { unique: true },
+);
 
-export const articleBookmark = model("articleBookmark", articleBookmarkSchema);
+export const articleBookmark = model('articleBookmark', articleBookmarkSchema);
