@@ -5,6 +5,9 @@ import { IAuthPayload } from '../interfaces/interfaces';
 
 export const authMiddleware: RequestHandler = (req, _, next) => {
   try {
+
+    console.log(req.headers?.authorization);
+    console.log("....................")
     const [scheme, bearerToken] = req?.headers?.authorization?.split(' ') ?? [];
     const accessToken =
       req.cookies?.accessToken || (scheme?.toLowerCase() === 'bearer' ? bearerToken : undefined);
