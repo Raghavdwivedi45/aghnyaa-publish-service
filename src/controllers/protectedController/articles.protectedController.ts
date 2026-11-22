@@ -26,8 +26,19 @@ import { generateArticlePdfHtml, PDFGenerator } from '../../publish-utils/helper
 import { articleComment } from '../../models/articleComment.model';
 
 export const createDraftArticle = asyncHandler(async (req: Request, res: Response) => {
-  const { title, excerpt, content, coverImage, tags, isFeatured, readTime, status, language } =
-    req.body; // category,
+  const {
+    title,
+    excerpt,
+    content,
+    coverImage,
+    tags,
+    isFeatured,
+    readTime,
+    status,
+    language,
+    references,
+    linkedArticles,
+  } = req.body; // category,
   const { _id, role } = req.user;
 
   if (role !== UserRole.AUTHOR) {
@@ -144,6 +155,8 @@ export const createDraftArticle = asyncHandler(async (req: Request, res: Respons
     language: language || 'English',
     isFeatured: isFeatured || defaultIsFeatured, // if user doesn't set it explicitly true, article is not featured
     status: status ?? defaultStatus,
+    references: references || [],
+    linkedArticles: linkedArticles ?? [],
     readTime: Number(readTime) || calculateReadTime(content),
   });
 
@@ -201,8 +214,19 @@ export const getMyDrafts = asyncHandler(async (req: Request, res: Response) => {
 export const updateArticleInformation = asyncHandler(async (req: Request, res: Response) => {
   const { articleSlug } = req.params;
   const { _id, role } = req.user;
-  const { title, excerpt, content, coverImage, tags, isFeatured, readTime, language, status } =
-    req.body; //  category,
+  const {
+    title,
+    excerpt,
+    content,
+    coverImage,
+    tags,
+    isFeatured,
+    readTime,
+    language,
+    status,
+    references,
+    linkedArticles,
+  } = req.body; //  category,
   if (role !== UserRole.AUTHOR) {
     throw new ApiError(400, 'User is not authorised to access this resource');
   }
@@ -224,6 +248,8 @@ export const updateArticleInformation = asyncHandler(async (req: Request, res: R
   if (readTime !== undefined) updateData.readTime = readTime;
   if (readTime !== undefined) updateData.readTime = readTime;
   if (status !== undefined) updateData.status = status;
+  if (references !== undefined) updateData.references = references;
+  if (linkedArticles !== undefined) updateData.linkedArticles = linkedArticles;
 
   const article = await Article.findOne({ slug: articleSlug, author: _id });
   if (!article) {

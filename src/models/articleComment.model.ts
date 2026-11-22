@@ -9,6 +9,7 @@ const articleCommentSchema = new Schema(
     articleId: {
       type: Schema.Types.ObjectId,
       required: true,
+      ref: 'Article',
     },
     comment: {
       type: String,

@@ -1,8 +1,24 @@
 import { model, Schema } from 'mongoose';
 import { IArticle, IArticleMethods } from '../interfaces/article.interfaces';
 import { ArticleModel } from '../types/article.types';
-import { ARTICLE_STATUS, ARTICLE_TAGS } from '../constants/article.constants'; // ARTICLE_CATEGORIES
+import { ARTICLE_STATUS, ARTICLE_TAGS, REFERENCE_TYPE } from '../constants/article.constants'; // ARTICLE_CATEGORIES
 import { languageArray } from '../common-folder/constants/constants';
+
+const referenceSchema = new Schema(
+  {
+    type: {
+      type: String,
+      enum: REFERENCE_TYPE,
+      required: true,
+    },
+    description: {
+      type: String,
+      trim: true,
+      required: true,
+    },
+  },
+  { _id: false },
+);
 
 // IArticle (Document Shape) -> what fields exist in your MongoDB document
 
@@ -101,6 +117,23 @@ const articleSchema = new Schema<IArticle, ArticleModel, IArticleMethods>(
       },
       default: 'English',
       required: true,
+    },
+    references: {
+      type: [referenceSchema],
+      default: [],
+    },
+    linkedArticles: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'Article',
+        },
+      ],
+      default: [],
+      validate: {
+        validator: (arr: string[]) => arr.length <= 3,
+        message: 'Maximum 3 linked articles allowed.',
+      },
     },
   },
   { timestamps: true },

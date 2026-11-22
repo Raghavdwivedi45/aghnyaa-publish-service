@@ -16,9 +16,8 @@ export const getAllArticlesController = asyncHandler(async (req: Request, res: R
     createdBefore,
     articleSlug,
     tags,
+    excludeContent,
   } = req.query; // category,
-  const _id = req?.user?._id || null;
-
   const articleSlugsArr = articleSlug?.toString()?.split(',')?.filter(Boolean);
 
   if (Number(limit) > 10 || (articleSlugsArr && articleSlugsArr?.length > 10)) {
@@ -60,6 +59,7 @@ export const getAllArticlesController = asyncHandler(async (req: Request, res: R
     { $match: match },
     { $skip: (Number(page) - 1) * Number(limit) },
     { $limit: Number(limit) },
+    ...(excludeContent ? [{ $project: { content: 0, references: 0 } }] : []),
 
     ...(req?.user?._id
       ? [
@@ -127,6 +127,14 @@ export const getAllArticlesController = asyncHandler(async (req: Request, res: R
         ]),
   ]);
 
+  if (articles?.length === 1) {
+    const linkedIds = articles?.[0]?.linkedArticles ?? [];
+    const linkedDocs = await Article.find({ _id: { $in: linkedIds } })
+      .select('title slug coverImage')
+      .lean();
+    articles[0].linkedArticles = linkedDocs;
+  }
+
   const userIdArr = [
     ...new Set(articles.map((article) => article.author?.toString()).filter(Boolean)),
   ]; // .filter(Boolean) -> it's mainly removing undefined from articles that don't have an author.
@@ -141,6 +149,7 @@ export const getAllArticlesController = asyncHandler(async (req: Request, res: R
   }));
 
   const response = { articlesWithAuthors, totalPages };
+
   return res.status(200).json(new ApiResponse(200, response, 'Articles retrieved successfully!'));
 });
 
@@ -160,6 +169,7 @@ export const getTopArticlesController = asyncHandler(async (req: Request, res: R
     { $limit: 3 },
     { $project: { title: 1, slug: 1, coverImage: 1 } },
   ]);
+
   return res
     .status(200)
     .json(new ApiResponse(200, { top3Tags, top3LikedArticles }, 'Article retrieved successfully!'));
