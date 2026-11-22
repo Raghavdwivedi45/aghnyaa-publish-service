@@ -9,6 +9,7 @@ const articleBookmarkSchema = new Schema(
     articleId: {
       type: Schema.Types.ObjectId,
       required: true,
+      ref: 'Article',
     },
   },
   { timestamps: true },

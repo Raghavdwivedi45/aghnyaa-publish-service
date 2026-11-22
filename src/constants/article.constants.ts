@@ -48,6 +48,7 @@ export const ARTICLE_TAGS = [
 ] as const;
 
 export const ARTICLE_STATUS = ['DRAFT', 'PUBLISHED', 'EDITED'] as const;
+export const REFERENCE_TYPE = ['text', 'link'] as const;
 
 export const allowedImageTypes = [
   'image/jpeg',

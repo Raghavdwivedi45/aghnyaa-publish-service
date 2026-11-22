@@ -1,6 +1,7 @@
-import { Schema } from 'mongoose';
+import { ObjectId, Schema } from 'mongoose';
 import { ArticleStatus, ArticleTags } from '../types/article.types'; // ArticleCategories,
 import { languageType } from '../common-folder/types/types';
+import { REFERENCE_TYPE } from '../constants/article.constants';
 
 export interface IArticle {
   title: string;
@@ -19,6 +20,11 @@ export interface IArticle {
   bookmarks: number;
   publishedAt?: Date;
   language: languageType;
+  references: {
+    type: (typeof REFERENCE_TYPE)[number];
+    description?: string;
+  }[];
+  linkedArticles: ObjectId[];
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
